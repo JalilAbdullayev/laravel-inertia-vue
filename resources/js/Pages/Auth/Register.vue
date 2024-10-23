@@ -1,7 +1,7 @@
 <script setup>
-import {reactive} from "vue";
+import {useForm} from "@inertiajs/vue3";
 
-const form = reactive({
+const form = useForm({
     name: null,
     email: null,
     password: null,
@@ -9,7 +9,9 @@ const form = reactive({
 })
 
 const submit = () => {
-    console.log(form)
+    form.post(route('register'), {
+        onError: () => form.reset('password', 'password_confirmation')
+    })
 }
 </script>
 <template>
@@ -24,18 +26,27 @@ const submit = () => {
                     Name
                 </label>
                 <input type="text" id="name" v-model="form.name"/>
+                <small class="error">
+                    {{ form.errors.name }}
+                </small>
             </div>
             <div class="mb-6">
                 <label for="email">
                     E-mail
                 </label>
                 <input type="email" id="email" v-model="form.email"/>
+                <small class="error">
+                    {{ form.errors.email }}
+                </small>
             </div>
             <div class="mb-6">
                 <label for="password">
                     Password
                 </label>
                 <input type="password" id="password" v-model="form.password"/>
+                <small class="error">
+                    {{ form.errors.password }}
+                </small>
             </div>
             <div class="mb-6">
                 <label for="password_confirmation">
@@ -49,7 +60,7 @@ const submit = () => {
                     Login
                 </a>
                 </p>
-                <button class="primary-btn">
+                <button class="primary-btn" :disabled="form.processing">
                     Register
                 </button>
             </div>
