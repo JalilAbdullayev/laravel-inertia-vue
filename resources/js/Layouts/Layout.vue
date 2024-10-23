@@ -6,10 +6,10 @@
                     {{ $page.props.auth.user }}
                 </h1>
                 <div class="space-x-6">
-                    <Link href="/">
+                    <Link :href="route('home')">
                         Home
                     </Link>
-                    <Link href="/about">
+                    <Link :href="route('about')">
                         About
                     </Link>
                 </div>
