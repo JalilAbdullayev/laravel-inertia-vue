@@ -7,6 +7,8 @@ const form = useForm({
     email: null,
     password: null,
     password_confirmation: null,
+    avatar: null,
+    preview: null
 })
 
 const submit = () => {
@@ -14,6 +16,11 @@ const submit = () => {
         preserveScroll: true,
         onError: () => form.reset('password', 'password_confirmation')
     })
+}
+
+const change = e => {
+    form.avatar = e.target.files[0];
+    form.preview = URL.createObjectURL(e.target.files[0])
 }
 </script>
 <template>
@@ -23,6 +30,20 @@ const submit = () => {
     </h1>
     <div class="w-2\4 mx-auto">
         <form @submit.prevent="submit">
+            <div class="grid place-items-center">
+                <div class="relative size-28 rounded-full overflow-hidden border border-slate-300">
+                    <label for="avatar" class="absolute inset-0 grid content-end cursor-pointer">
+                        <span class="bg-white/70 pb-2 text-center">
+                            Avatar
+                        </span>
+                    </label>
+                    <input type="file" id="avatar" @input="change" hidden=""/>
+                    <img class="object-cover size-28" :src="form.preview" alt=""/>
+                </div>
+            </div>
+            <small class="error mt-2">
+                {{ form.errors.avatar }}
+            </small>
             <TextInput name="name" v-model="form.name" :message="form.errors.name"/>
             <TextInput name="email" type="email" v-model="form.email" :message="form.errors.email"/>
             <TextInput name="password" type="password" v-model="form.password" :message="form.errors.password"/>
