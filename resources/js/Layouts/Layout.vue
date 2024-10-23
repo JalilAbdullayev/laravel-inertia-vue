@@ -1,16 +1,13 @@
 <template>
     <div>
-        <header class="bg-indigo-500 text-white">
-            <nav class="flex items-center justify-between p-4 max-w-screen-lg mx-auto">
-                <h1>
-                    {{ $page.props.auth.user }}
-                </h1>
+        <header>
+            <nav>
                 <div class="space-x-6">
-                    <Link :href="route('home')">
+                    <Link :href="route('home')" class="nav-link">
                         Home
                     </Link>
-                    <Link :href="route('about')">
-                        About
+                    <Link :href="route('register')" class="nav-link">
+                        Register
                     </Link>
                 </div>
             </nav>
