@@ -6,7 +6,8 @@ import {debounce} from "lodash";
 
 const props = defineProps({
     users: Object,
-    searchTerm: String
+    searchTerm: String,
+    can: Object
 })
 
 const search = ref(props.searchTerm);
@@ -50,6 +51,7 @@ const getDate = date => new Date(date).toLocaleDateString('en-us', {
                 <th>
                     Registration Date
                 </th>
+                <th v-if="can.delete_user"></th>
             </tr>
             </thead>
             <tbody>
@@ -65,6 +67,9 @@ const getDate = date => new Date(date).toLocaleDateString('en-us', {
                 </td>
                 <td>
                     {{ getDate(user.created_at) }}
+                </td>
+                <td v-if="can.delete_user">
+                    <button class="bg-red-500 size-6 rounded-full"></button>
                 </td>
             </tr>
             </tbody>
